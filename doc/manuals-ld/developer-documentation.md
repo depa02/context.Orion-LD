@@ -522,7 +522,7 @@ There is no payload data for this service.
 This service has no URI Parameters.
 
 #### Response HTTP Status Code
-* 200 OK          - if all OK
+* 204 No Content  - the entity has been successfully deleted
 * 400 Bad Request - if the entity id of the URL PATH is not a valid URI
 * 404 Not Found   - if the entity does not exist
 
@@ -644,18 +644,18 @@ There is no payload data for this service.
 * attrs       - list of attributes (only those attributes are returned and only entities with any of the attrs match)
 * q           - query string - see separate chapter on 'q'
 * csf         - not implemented in Alpha Release 1
+* limit       - maximum number of entities to be returned
+* offset      - the index of the first entity
 * georel      - geo relationship (near, within, etc)
 * geometry    - geometry (point, circle, polygon, ...)
 * coordinates - coordinates array, serialized as a string
 * geoproperty - not implemented in Alpha 1 - only "location" can be used as geo attribute
-* limit       - maximum number of entities to be returned
-* offset      - the index of the first entity
 
-For all geofencing URI parameters (last four), please refer to the separate chapter on Geolocation
+For all geofencing URI parameters (the last four), please refer to the separate chapter on Geolocation
 
 #### Response HTTP Status Code
-* 200 OK          - ???
-* 400 Bad Request - ???
+* 200 OK          - the payload body is a JSON array that contains the matching entities
+* 400 Bad Request - something is off with the request and the payload body contains information about the error
 
 #### Response HTTP Headers
 * Link - to echo back to the context (if Accept: application/json)
@@ -692,7 +692,7 @@ There is no payload data for this service.
 * attrs       - list of attributes (only those attributes are returned)
 
 #### Response HTTP Status Code
-* 200 OK          - ???
+* 200 OK          - the payload body is a JSON object containing the requested information of the entity 
 * 400 Bad Request - if the entity ID of the URL PATH is not a valid URI
 * 404 Not Found   - if the entity ID of the URL PATH does not specify an existing entity
 
@@ -793,8 +793,8 @@ go to the MQTT broker, while the client subscribes to the `topic` in the MQTT br
 This service has no URI Parameters.
 
 #### Response HTTP Status Code
-* 201 Created - ??
-* 400 Bad Request - in case the request or its content is incorrect
+* 201 Created        - no payload data for a successful creation of a subscription
+* 400 Bad Request    - in case the request or its content is incorrect
 * 409 Already Exists - if the provided subscription id is the id of an already existing subscription
 
 #### Response HTTP Headers
@@ -828,7 +828,7 @@ There is no payload data for this service.
 * offset      - the index of the first subscription
 
 #### Response HTTP Status Code
-* 200 OK          - ???
+* 200 OK          - the payload body is a JSON array that contains the matching subscriptions
 * 400 Bad Request - only way to get here is by setting the `limit` too high
 
 #### Response HTTP Headers
@@ -865,7 +865,7 @@ There is no payload data for this service.
 There are no URI Parameters for this service.
 
 #### Response HTTP Status Code
-* 200 OK          - ???
+* 200 OK          - the payload body is a JSON object containing the requested subscription
 * 400 Bad Request - the _subscriptionId_ in the URL PATH is not a valid URL
 * 404 Not Found   - the subscription specified in the URL PATH does not exist
 
@@ -941,7 +941,7 @@ There is no payload data for this service.
 There are no URI Parameters for this service.
 
 #### Response HTTP Status Code
-* 204 No Content  - ???
+* 204 No Content  - no payload data for a successful deletion of a subscription
 * 400 Bad Request - the subscription ID of the URI PATH is not a valid ID (not a URI)
 * 404 Not Found   - the subscription ID of the URI PATH is not found among the subscriptions.
 
@@ -1068,9 +1068,9 @@ Only three fields are mandatory:
 There are no URI Parameters for this service.
 
 #### Response HTTP Status Code
-* 201 Created               - ???
-* 400 Bad Request           - ???
-* 409 Already Exists        - ???
+* 201 Created               - no payload data for successful creation of a registration
+* 400 Bad Request           - something is off with the request and the payload body contains information about the error 
+* 409 Already Exists        - the registration already exists
 * 422 Unprocessable Entity  - Unprocessable Context Source Registration
 
 #### Response HTTP Headers
@@ -1117,8 +1117,8 @@ There is no payload data for this service.
 * endTime      - Not implemented in Alpha Release 1
 
 #### Response HTTP Status Code
-* 200 OK          - ???
-* 400 Bad Request - ???
+* 200 OK          - the payload body is a JSON array that contains the matching registrations
+* 400 Bad Request - something is off with the request and the payload body contains information about the error
 
 #### Response HTTP Headers
 * Link
@@ -1153,7 +1153,7 @@ There is no payload data for this service.
 There are no URI Parameters for this service.
 
 #### Response HTTP Status Code
-* 200 OK          - ???
+* 200 OK          - the payload body is a JSON object that contains the requested registration
 * 400 Bad Request - the registration id in the URL PATH is not a valid URI
 * 404 Not Found   - there is no reguistration with an ID as the one specified in the URL PATH 
 
@@ -1163,7 +1163,38 @@ There are no URI Parameters for this service.
 #### Response Payload Data
 The entire registration as a JSON object, e.g.:
 ```json
-???
+{
+    "description": "description of reg test 1",
+    "endpoint": "http://my.csource.org:1026",
+    "expires": "2029-10-31T10:00:25Z",
+    "id": "urn:ngsi-ld:ContextSourceRegistration:csr1a342",
+    "information": [
+        {
+            "entities": [
+                {
+                    "id": "urn:ngsi-ld:Building:A456",
+                    "type": "Building"
+                }
+            ],
+            "properties": [
+                "size",
+                "high"
+            ],
+            "relationships": [
+                "isAvailable"
+            ]
+        }
+    ],
+    "managementInterval": {
+        "end": "2028-12-31T10:00:00Z",
+        "start": "2018-12-31T10:00:00Z"
+    },
+    "observationInterval": {
+        "end": "2028-12-31T10:00:00Z",
+        "start": "2018-12-31T10:00:00Z"
+    },
+    "type": "ContextSourceRegistration"
+}
 ```
 
 #### Pointers to the ETSI NGSI-LD documentation
