@@ -2,7 +2,7 @@
 
 Welcome to the Developer Guide of Orion-LD, the NGSI-LD context broker!
 
-The Orion-LD context broker doesn't have a GUI and the only way to contact the broker is programatically,
+The Orion-LD context broker doesn't have a GUI and the only way to contact the broker is programmatically,
 be it a shell-script, a javascript program, a python program or whatever.
 Well, apart from using *Postman* and similar tools, of course.
 
@@ -56,7 +56,7 @@ This document will go into more detail on pretty much everything about the Orion
 * Query Filter
 
 ## ProblemDetails to describe errors
-**ProblemDetails** is a standard way of specifying errors in HTTP API responses and the NGSi-LD specifies this to be used in a variety of responses.
+**ProblemDetails** is a standard way of specifying errors in HTTP API responses and the NGSI-LD specifies this to be used in a variety of responses.
 [Here](https://lurumad.github.io/problem-details-an-standard-way-for-specifying-errors-in-http-api-responses-asp.net-core) is a tutorial on _ProblemDetails_
 and [here](https://tools.ietf.org/html/rfc7807) is the RFC.
 
@@ -96,9 +96,8 @@ If `Accept: application/json` then the context is put in the Link HTTP header of
 if `Accept: application/ld+json`, then the context is put in the payload data.
 
 As the context in the response will *always* be the very same context of the request, be careful with services
-that return arrays of entities/subscriptions/registrations. If application/ld+json is used for such a service, then the
+that return arrays of entities/subscriptions/registrations. If `application/ld+json` is used for such a service, then the
 context will be copied in each and every item (entity/subscription/registration) is the response payload data.
-Just sayin'.
 
 ## Creation of Entities
 Entities can be created in three different ways:
@@ -563,7 +562,7 @@ For 400 and 404 status codes, the typical { type, title, detail } error object (
 
 
 ## Forwarding of Creation/Modification of Entities/Attributes
-The _Forwarding Concept_ for NGSI-LD has still to be specified. We have started to look at this a little (we == the ETSI CIM group defining the NGSI-LD API)
+The _Forwarding Concept_ for NGSI-LD has still to be specified. We have started to look at this a little (we == the ETSI CIM group defining the NGSI-LD API),
 but we still have a long way to go before having anything decided and documented.
 
 As Orion-LD builds on Orion and reuses (with modification for expansion and compaction of items) whatever Orion has implemented, Orion-LD actually supports
@@ -582,14 +581,14 @@ Forwarding is a mechanism to include context providers as "part of the broker". 
 That was for retrieval of entities.
 Updating of entities works pretty much the same way.
 
-Now, for forwarding NGSi-LD requests in Orion-LD. please see the proper documentation of Orion and imagine the attribute names and entity types to be expanded/compacted according to the context.
+Now, for forwarding NGSI-LD requests in Orion-LD. please see the proper documentation of Orion and imagine the attribute names and entity types to be expanded/compacted according to the context.
 The context used for forwarding must of course be the context specified in the registration.
 This hasn't even been tested, but still, it should "work a little" ...
 
 ## System Attributes
-Each entity and attribute has two timestamps, namely "createdAt", and "modifiedAt".
-The broker makes sure these two "builtin special attributes" are created and updated accordingly during the lifetime of the entity/attribute.
-The values *can not* be altered from outside the broker, i.e., there is no service that let's a user set these timestamps to aleatory values.
+Each entity and attribute have two timestamps, namely "createdAt", and "modifiedAt".
+The broker makes sure these two "built-in special attributes" are created and updated accordingly during the lifetime of the entity/attribute.
+The values *cannot* be altered from outside the broker, i.e., there is no service that lets a user set these timestamps to aleatory values.
 But of course, when modifying an entity, its "modifiedAt" is updated, same with attributes.
 
 A user can ask the broker to include these special attributes in queries though, by specifying the value "sysAttrs" to the URI parameter "options":
@@ -631,7 +630,7 @@ Also, one of the following URI parameters *must* be present, to narrow down the 
 * attrs
 * q
 
-This is what the ETSI NGSi-LD specification version 1.2.1 says, at least.
+This is what the ETSI NGSI-LD specification version 1.2.1 says, at least.
 Hopefully, this restriction will be removed in version 1.3.1.
 
 #### Request Payload Data
@@ -646,19 +645,19 @@ There is no payload data for this service.
 * csf         - not implemented in Alpha Release 1
 * limit       - maximum number of entities to be returned
 * offset      - the index of the first entity
-* georel      - geo relationship (near, within, etc)
+* georel      - geo relationship (near, within, etc.)
 * geometry    - geometry (point, circle, polygon, ...)
 * coordinates - coordinates array, serialized as a string
 * geoproperty - not implemented in Alpha 1 - only "location" can be used as geo attribute
 
-For all geofencing URI parameters (the last four), please refer to the separate chapter on Geolocation
+For all geofencing URI parameters (the last four), please refer to the separate chapter on Geolocation.
 
 #### Response HTTP Status Code
 * 200 OK          - the payload body is a JSON array that contains the matching entities
 * 400 Bad Request - something is off with the request and the payload body contains information about the error
 
 #### Response HTTP Headers
-* Link - to echo back to the context (if Accept: application/json)
+* Link - to echo back to the context (if `Accept: application/json`)
 
 #### Response Payload Data
 The response payload data is a JSON array of the matching entities:
@@ -992,9 +991,9 @@ creating the subscription.
 
 ## Registrations
 Context Source Providers can be "mini brokers" that implement only a small part of the NGSI-LD API.
-Typically a Context Provider isn't contacted directly by clients but instead it registers its entities in a broker and
+Typically, a Context Provider isn't contacted directly by clients but instead it registers its entities in a broker and
 the broker will later contact the Context Provider when necessary.
-The registration is the way for a Context Provider to inform the broker of what entities is has knowledge.
+The registration is the way for a Context Provider to inform the broker of what entities it has knowledge.
 
 ## Creation of Registrations
 ### POST /ngsi-ld/v1/csourceRegistrations
@@ -1052,7 +1051,7 @@ The payload data at creating a registration looks like this:
   "Property 1": <JSON Value>,
   "Property 2": <JSON Value>,
   ...
-  "Property N": <JSON Value>,
+  "Property N": <JSON Value>
 }
 ```
 
@@ -1215,7 +1214,7 @@ Not Implemented in Alpha Release 1
 Temporal Representation in FIWARE is taken care of by other GEs, such as Cygnus, and will not be implemented in Orion-LD.
 
 ## Security
-Apart from forbidden characters, all security concerns are taken care of by other GEs, such as PEP, KeyRock, etc and will not be implemented in Orion-LD.
+Apart from forbidden characters, all security concerns are taken care of by other GEs, such as PEP, KeyRock, etc. and will not be implemented in Orion-LD.
 
 ## Geolocation
 TBD
