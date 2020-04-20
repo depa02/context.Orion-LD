@@ -13,7 +13,7 @@ The obvious choice would be MacOS, and if anybody volunteers to investigate on t
 
 ## Supported Linux Distributions
 Orion-LD NGSI-LD Context Broker reference distribution is Ubuntu 18.04.
-While Orion-LD works just fine also in CentOS, Debian, etc, or, other versions of Ubuntu, the inly officially supported distribution is Ubuntu 18.04.
+While Orion-LD works just fine also in CentOS, Debian, etc, or, other versions of Ubuntu, the only officially supported distribution is Ubuntu 18.04.
 
 ## Installation
 
