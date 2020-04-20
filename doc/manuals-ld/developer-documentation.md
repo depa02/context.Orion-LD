@@ -214,9 +214,9 @@ The syntaxis of an entity is fully described in the previous chapter (about `POS
 There are no URI parameters for this request. All necessary information resides in the request payload data.
 
 #### Response HTTP Status Code
-201 Created      - all entities were successfully created. No response payload data supplied.
-207 Multi Status - some entities were successfully created, others weren't. Details of each error in the response payload data.
-400 Bad Request  - none of the entities in the request payload data were created. Details of each error in the response payload data.
+* 201 Created      - all entities were successfully created. No response payload data supplied.
+* 207 Multi Status - some entities were successfully created, others weren't. Details of each error in the response payload data.
+* 400 Bad Request  - none of the entities in the request payload data were created. Details of each error in the response payload data.
 
 #### Response HTTP Headers
 * Link - to echo back to the creator the context that was used during modification of the entities.
@@ -279,9 +279,9 @@ Exactly like `POST /ngsi-ld/v1/entityOperations/create`.
 The default mode is to *replace* the entire already existing entity with the corresponding entity in the payload data.
 
 #### Response HTTP Status Code
-201 Created      - all entities were successfully created/updated. No response payload data supplied.
-207 Multi Status - some entities were successfully created/updated, others weren't. Details of each error in the response payload data.
-400 Bad Request  - none of the entities in the request payload data were created/updated. Details of each error in the response payload data.
+* 201 Created      - all entities were successfully created/updated. No response payload data supplied.
+* 207 Multi Status - some entities were successfully created/updated, others weren't. Details of each error in the response payload data.
+* 400 Bad Request  - none of the entities in the request payload data were created/updated. Details of each error in the response payload data.
 
 #### Response HTTP Headers
 * Link - to echo back to the creator the context that was used during modification of the entities.
@@ -437,7 +437,7 @@ E.g., to change the value to 45, and add a sub-property P11, the payload could l
     "value": "p"
   }
 }
-
+```
 #### Request URI Parameters
 There are no URI parameters for this request. All necessary information resides in the request payload data.
 
@@ -999,6 +999,7 @@ The registration is the way for a Context Provider to inform the broker of what 
 
 #### Request Payload Data
 The payload data at creating a registration looks like this:
+```json
 {
   "id": "URI",  # if not given the system assigns an ID for the registration
   "type": "ContextSourceRegistration",  # MANDATORY
@@ -1051,6 +1052,7 @@ The payload data at creating a registration looks like this:
   ...
   "Property N": <JSON Value>,
 }
+```
 
 NOTE: In Alpha 1, the `information` array must have only one item.
       This is due to the data model or Orion, which Orion-LD follows.
@@ -1173,7 +1175,7 @@ The entite registration, as a JSON object, e.g.:
 NOT IMPLEMENTED IN ALPHA RELEASE 1
 
 ## Subscription to Registrations
-Not Implemented in Alpha 1
+NOT IMPLEMENTED IN ALPHA RELEASE 1
 
 ## Temporal Representation
 Temporal Representation in FIWARE is taken care of by other GEs, such as Cygnus, and will not be implemented in Orion-LD.
